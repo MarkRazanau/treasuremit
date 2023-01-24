@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 export default function Redirect() {
   const router = useRouter();
   const { code } = router.query;
+  console.log(process.env.PORT, "abc");
 
   useEffect(() => {
     if (!code) {
@@ -14,10 +15,10 @@ export default function Redirect() {
     let objectWithData = {
       grant_type: "authorization_code",
       code: code,
-      redirect_uri: "https://treasuremit.herokuapp.com/redirect",
-      client_id: "32e4f86c-7f80-453f-ba09-2114b9296b16",
+      redirect_uri: "http://localhost:3000/redirect",
+      client_id: "baa96962-f4a6-4451-9c04-1fcf05c46c12",
       client_secret:
-        "bbR_dEVLyKM_CEr1ubKwHeNiO9FhwHgBWSY7cfiqZmc3SIy0YBmeBa_1EEezL6owmCo5h9naSkw9SGCMR1yRgw",
+        "M5w0HVzW7szOSXGl2mk7kOykzShEkK7kc8pXZZKTCihNoCqAbEXSTU4Do92ysi9X_7SJMgSvQQIk2vxKhcaCzw",
     };
 
     const returnUserID = async () => {
