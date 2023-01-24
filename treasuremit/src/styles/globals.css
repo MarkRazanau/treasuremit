@@ -1,0 +1,140 @@
+/* COlOR VARIABLES */
+
+:root{
+  --red: #EE3233;
+  --white: #F0ECEB;
+  --gray: #6C7476;
+  --lblue: #CEEBFB;
+  --blue: #A3D6F5;
+  --dblue: #7fc2e0;
+}
+
+
+.Login-container{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%);
+  display:block;
+  height:350px;
+  width:450px;
+  background-color: white;
+  border-radius: 15px;
+}
+
+.Login-container-shadow{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%);
+  display:block;
+  height:350px;
+  width:450px;
+  box-shadow: 0 0 1em rgb(184, 184, 184);
+  border-radius: 15px;
+}
+
+.Login-userinput, .Login-pswdinput{
+  position:absolute;
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style:hidden;
+  border-bottom: 2px solid var(--gray);
+  outline: none;
+  width:350px;
+  left:50%;
+  transform: translateX(-50%);
+  box-sizing:border-box;
+  height:40px;
+}
+
+.Login-user, .Login-pswd{
+  pointer-events: none;
+}
+
+.Login-userinput{
+  top:6rem;
+  background: "../../public/input_user.png" no-repeat scroll 20px 20px;
+  padding-left: 10px;
+}
+
+.Login-pswdinput{
+  top:11rem;
+}
+
+.Login-user{
+  position: absolute;
+  left: 3.5rem;
+  top:6.75rem;
+}
+.Login-pswd{
+  position: absolute;
+  left:3.5rem;
+  top:11.75rem;
+}
+
+.Login-userinput:focus, .Login-pswdinput:focus, .Login-userinput:not(:placeholder-shown), .Login-pswdinput:not(:placeholder-shown){
+  border-color: transparent;
+  outline: none;
+  border-radius: 15px;
+  width:370px;
+  height:40px;
+  border: 2px solid var(--dblue);
+}
+
+.Login-submit{
+  position:absolute;
+  left:50%;
+  top:75%;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, var(--lblue) 0%, var(--blue) 57%, var(--dblue) 100%);
+  height: 3rem;
+  width: 85%;
+  border-radius: 15rem;
+  border:none;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+}
+
+.Login-welcome{
+  position:absolute;
+  left:50%;
+  top:8%;
+  transform: translateX(-50%);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 25px;
+  white-space: nowrap;
+}
+
+.Login-backimg{
+  height:100vh;
+  width:100%;
+
+}
+
+.Login-page{
+  margin:0px;
+  padding:0px;
+  width:100%;
+  height:100%;
+}
+
+.Login-backimg-wrapper{
+  letter-spacing: 0;
+  word-spacing: 0;
+  font-size: 0;
+}
+
+.Login-beaver{
+  height:471px;
+  width:364px;
+  position:absolute;
+  top:25%;
+  left:50%;
+  transform: translate(-50%, -50%);
+}
+
+body{
+  margin:0;
+  padding:0;
+}
