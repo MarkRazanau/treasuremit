@@ -1,9 +1,12 @@
+import configparser
 import io
 import json
+import os
 from typing import List
 
 import qrcode
 from fastapi import Depends, FastAPI, HTTPException, Response, status
+from fastapi.openapi.utils import get_openapi
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2AuthorizationCodeBearer
 from jose import JWTError, jwt
@@ -12,13 +15,10 @@ from sqlalchemy.orm import Session
 from . import crud, models, schemas
 from .database import SessionLocal, engine
 
-models.Base.metadata.create_all(bind=engine)
+script_dir = os.path.dirname(os.path.realpath(__file__))
+waldobook_dir = os.path.dirname(script_dir)
 
-app = FastAPI()
-
-from fastapi.openapi.utils import get_openapi
-
-
+# This makes swagger use id_token instead of access_token
 def custom_openapi():
     if app.openapi_schema:
         return app.openapi_schema
@@ -28,13 +28,16 @@ def custom_openapi():
         description="An API that uses OIDC id_token to authenticate",
         routes=app.routes,
     )
-    print(openapi_schema)
     openapi_schema["components"]["securitySchemes"]["OAuth2AuthorizationCodeBearer"][
         "x-tokenName"
     ] = "id_token"
     app.openapi_schema = openapi_schema
     return app.openapi_schema
 
+
+models.Base.metadata.create_all(bind=engine)
+
+app = FastAPI()
 
 app.openapi = custom_openapi
 
@@ -44,15 +47,8 @@ oauth2_scheme = OAuth2AuthorizationCodeBearer(
     scopes={"phone": "", "openid": "", "address": "", "email": "", "profile": ""},
 )
 
-# oauth2_scheme.model.tokenName = "id_token"
-# print(oauth2_scheme.model.json())
-
-
-# client_id: baa96962-f4a6-4451-9c04-1fcf05c46c12
-# client_secret: M5w0HVzW7szOSXGl2mk7kOykzShEkK7kc8pXZZKTCihNoCqAbEXSTU4Do92ysi9X_7SJMgSvQQIk2vxKhcaCzw
-# config url: https://oidc.mit.edu/register/baa96962-f4a6-4451-9c04-1fcf05c46c12
-# Registration access token: eyJhbGciOiJSUzI1NiJ9.eyJhdWQiOlsiYmFhOTY5NjItZjRhNi00NDUxLTljMDQtMWZjZjA1YzQ2YzEyIl0sImlzcyI6Imh0dHBzOlwvXC9vaWRjLm1pdC5lZHVcLyIsImp0aSI6IjE2ZmY0ZjE0LTQxMjctNDEyZC04ZjMwLTEwOTdjMjY3ZGY4MyIsImlhdCI6MTY3NDAzMjE1NX0.VGIc_BZA1w8SeBzHvLchquvNiNPldvBuIjRV6ELkTpUDsN3rQKROuANduo_N3khglUHGBad8y7XsUT1M9flfDIbGPTu6Kdx46lrPrEvnynasBWkgsGumHWSdZud2zawYC3WlyCFSBzPv0l-YKRB4e9e_GGrHs5v50gm01tGmBNtaFQYyqgUNw-QDf4feTaxE5h90eNrQ2_fh7fZQ0b0217PzkTl_GCpPQJl9cFgwO5DgInG54zmcUOKp8bte5-g7EdDYDFW5GEq4cNOWE-Z54Act92MSZYnWgsFl-tlG_xBtvH-MUaH-A75SxZL41rwRskIGZCnuxgBJ06FZ-UJMcg
-
+config = configparser.ConfigParser()
+config.read(f"{waldobook_dir}/config.ini")
 
 # Dependency
 def get_db():
@@ -63,70 +59,28 @@ def get_db():
         db.close()
 
 
-# @app.post("/token", response_model=Token)
-# async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
-#     user = authenticate_user(fake_users_db, form_data.username, form_data.password)
-#     if not user:
-#         raise HTTPException(status_code=400, detail="Incorrect username or password")
-#     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-#     access_token = create_access_token(
-#         data={"sub": user.username, "scopes": form_data.scopes},
-#         expires_delta=access_token_expires,
-#     )
-#     return {"access_token": access_token, "token_type": "bearer"}
-#
-#
-
-SECRET_KEY = """
------BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApkkVnbFUJXn6Za9zOoJp
-mnlZFDocyOAKQFJli3PuYaMkCS1UI0BT2Mt0NkeFw84hiMhUvVEFpUPT4CytvVcc
-NjSbCEBdm/TMCZj0hbISLtjO/CUi7NbyzINCw2KpXpxFFVt3sJmKidCREXy06mOr
-CS66KE2t8oxnPpEWbma+fXLH13i1YSJMOePJvx3piAQVy76Os9NV8dPlWf5wyjSP
-8OooSc/ZX6tq11IRfQPTKuGyNunLeWDHvY1rwsAtGO3iwcnthP3yMeAmhg69y+sB
-cWn5/GGRbFh1sEk18Yl6d7X5zqSQWB/9a+UaeAplCJmD3tUEWDu9e+1nDdmwK6sX
-twIDAQAB
------END PUBLIC KEY-----
-"""
-
-# SECRET_KEY = "M5w0HVzW7szOSXGl2mk7kOykzShEkK7kc8pXZZKTCihNoCqAbEXSTU4Do92ysi9X_7SJMgSvQQIk2vxKhcaCzw"
 ALGORITHM = "RS256"
-# ALGORITHM = "HS256"
-MIT_OAUTH2_CLIENT_ID = "baa96962-f4a6-4451-9c04-1fcf05c46c12"
-
-fake_users_db = {
-    "johndoe": {
-        "username": "johndoe",
-        "full_name": "John Doe",
-        "email": "johndoe@example.com",
-        "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
-        "is_active": False,
-    }
-}
+JWK_PUBLIC_KEY = config["MIT_OIDC"]["jwk_public_key"]
+MIT_OAUTH2_CLIENT_ID = config["MIT_OIDC"]["client_id"]
 
 
 async def get_current_user(
     token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)
 ):
-    print(token)
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
     try:
-        print("before payload")
         payload = jwt.decode(
-            token, SECRET_KEY, audience=MIT_OAUTH2_CLIENT_ID, algorithms=[ALGORITHM]
+            token, JWK_PUBLIC_KEY, audience=MIT_OAUTH2_CLIENT_ID, algorithms=[ALGORITHM]
         )
-        print(payload)
         sub: str = payload.get("sub") or ""
         if sub is None:
             raise credentials_exception
         user = schemas.UserBase(sub=sub)
-    except JWTError as e:
-        print(e)
-        print("foo")
+    except JWTError:
         raise credentials_exception
     user = crud.get_user(db, user_sub=user.sub)
     if user is None:
