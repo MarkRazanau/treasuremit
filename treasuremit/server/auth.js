@@ -4,9 +4,9 @@ const mitIssuer = await Issuer.discover("https://oidc.mit.edu/authorize");
 console.log("Discovered issuer %s %O", mitIssuer.issuer, mitIssuer.metadata);
 
 const client = new mitIssuer.Client({
-  client_id: "baa96962-f4a6-4451-9c04-1fcf05c46c12",
+  client_id: "32e4f86c-7f80-453f-ba09-2114b9296b16",
   client_secret:
-    "M5w0HVzW7szOSXGl2mk7kOykzShEkK7kc8pXZZKTCihNoCqAbEXSTU4Do92ysi9X_7SJMgSvQQIk2vxKhcaCzw",
+    "bbR_dEVLyKM_CEr1ubKwHeNiO9FhwHgBWSY7cfiqZmc3SIy0YBmeBa_1EEezL6owmCo5h9naSkw9SGCMR1yRgw",
   redirect_uris: ["https://treasuremit.herokuapp.com/redirect"],
   response_types: ["code"],
 });
