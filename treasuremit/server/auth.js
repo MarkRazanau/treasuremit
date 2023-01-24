@@ -7,7 +7,7 @@ const client = new mitIssuer.Client({
   client_id: "baa96962-f4a6-4451-9c04-1fcf05c46c12",
   client_secret:
     "M5w0HVzW7szOSXGl2mk7kOykzShEkK7kc8pXZZKTCihNoCqAbEXSTU4Do92ysi9X_7SJMgSvQQIk2vxKhcaCzw",
-  redirect_uris: ["http://localhost:3000/redirect"],
+  redirect_uris: ["https://treasuremit.herokuapp.com/redirect"],
   response_types: ["code"],
 });
 
