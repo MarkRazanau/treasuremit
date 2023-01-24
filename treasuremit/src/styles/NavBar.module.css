@@ -1,0 +1,25 @@
+.container{
+    background-color: var(--lblue);
+    display: flex;
+    padding-top:10px;
+    padding-bottom:2px;
+    padding-left:20px;
+    padding-right:30px;
+    justify-content: space-between;
+    font-family: 'Solitreo', cursive;
+    align-items: center;
+}
+
+.name{
+    font-size: 30px;
+}
+
+
+.items{
+    margin-left: 40px;
+    font-size:18px;
+}
+
+.itemContainer{
+    display: flex;
+}

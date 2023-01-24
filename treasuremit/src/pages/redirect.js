@@ -35,8 +35,8 @@ export default function Redirect() {
   }, [code]);
 
   return (
-    <div>
-      <h1>Logged in!</h1>
+    <div className="Redirect-text">
+      <h1>Redirecting!</h1>
     </div>
   );
 }

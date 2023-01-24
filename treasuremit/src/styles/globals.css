@@ -34,53 +34,6 @@
   border-radius: 15px;
 }
 
-.Login-userinput, .Login-pswdinput{
-  position:absolute;
-  border-top-style: hidden;
-  border-right-style: hidden;
-  border-left-style:hidden;
-  border-bottom: 2px solid var(--gray);
-  outline: none;
-  width:350px;
-  left:50%;
-  transform: translateX(-50%);
-  box-sizing:border-box;
-  height:40px;
-}
-
-.Login-user, .Login-pswd{
-  pointer-events: none;
-}
-
-.Login-userinput{
-  top:6rem;
-  background: "../../public/input_user.png" no-repeat scroll 20px 20px;
-  padding-left: 10px;
-}
-
-.Login-pswdinput{
-  top:11rem;
-}
-
-.Login-user{
-  position: absolute;
-  left: 3.5rem;
-  top:6.75rem;
-}
-.Login-pswd{
-  position: absolute;
-  left:3.5rem;
-  top:11.75rem;
-}
-
-.Login-userinput:focus, .Login-pswdinput:focus, .Login-userinput:not(:placeholder-shown), .Login-pswdinput:not(:placeholder-shown){
-  border-color: transparent;
-  outline: none;
-  border-radius: 15px;
-  width:370px;
-  height:40px;
-  border: 2px solid var(--dblue);
-}
 
 .Login-submit{
   position:absolute;
@@ -92,7 +45,7 @@
   width: 85%;
   border-radius: 15rem;
   border:none;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: 'Solitreo', cursive;
 
 }
 
@@ -101,9 +54,10 @@
   left:50%;
   top:8%;
   transform: translateX(-50%);
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: 'Solitreo', cursive;
   font-size: 25px;
   white-space: nowrap;
+
 }
 
 .Login-backimg{
@@ -137,4 +91,23 @@
 body{
   margin:0;
   padding:0;
+}
+
+.Login-info{
+  margin-left: 2rem;
+  margin-right: 2rem;
+  text-align: center;
+  position:absolute;
+  top:8rem;
+  font-family: 'Solitreo', cursive;
+}
+
+.Redirect-text{
+  text-align: center;
+  font-family: 'Solitreo', cursive;
+}
+
+.map-container {
+  width: 100%;
+  height: 100vh;
 }
