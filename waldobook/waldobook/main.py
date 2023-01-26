@@ -60,8 +60,8 @@ def get_db():
 
 
 ALGORITHM = "RS256"
-JWK_PUBLIC_KEY = config["MIT_OIDC"]["jwk_public_key"]
-MIT_OAUTH2_CLIENT_ID = config["MIT_OIDC"]["client_id"]
+JWK_PUBLIC_KEY = os.getenv('JWK_PUBLIC_KEY') or config["MIT_OIDC"]["jwk_public_key"]
+MIT_OAUTH2_CLIENT_ID = os.getenv('MIT_OAUTH2_CLIENT_ID') or config["MIT_OIDC"]["client_id"]
 
 
 async def get_current_user(
