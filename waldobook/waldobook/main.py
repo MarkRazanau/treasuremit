@@ -1,4 +1,3 @@
-import configparser
 import io
 import json
 import os
@@ -47,9 +46,6 @@ oauth2_scheme = OAuth2AuthorizationCodeBearer(
     scopes={"phone": "", "openid": "", "address": "", "email": "", "profile": ""},
 )
 
-config = configparser.ConfigParser()
-config.read(f"{waldobook_dir}/config.ini")
-
 # Dependency
 def get_db():
     db = SessionLocal()
@@ -60,8 +56,8 @@ def get_db():
 
 
 ALGORITHM = "RS256"
-JWK_PUBLIC_KEY = os.getenv('JWK_PUBLIC_KEY') or config["MIT_OIDC"]["jwk_public_key"]
-MIT_OAUTH2_CLIENT_ID = os.getenv('MIT_OAUTH2_CLIENT_ID') or config["MIT_OIDC"]["client_id"]
+JWK_PUBLIC_KEY = os.getenv('JWK_PUBLIC_KEY')
+MIT_OAUTH2_CLIENT_ID = os.getenv('MIT_OAUTH2_CLIENT_ID')
 
 
 async def get_current_user(
