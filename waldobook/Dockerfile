@@ -8,8 +8,6 @@ ENV POETRY_VERSION=1.1.12
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y libpq-dev
-
 # Export poetry dependencies to file
 RUN pip install "poetry==$POETRY_VERSION"
 COPY poetry.lock pyproject.toml ./
