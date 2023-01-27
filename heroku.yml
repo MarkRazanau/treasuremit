@@ -6,4 +6,4 @@ build:
   docker:
     web: waldobook/Dockerfile
 run:
-  web: gunicorn -b 0.0.0.0:80 -w 4 -k uvicorn.workers.UvicornWorker waldobook.main:app
+  web: gunicorn --bind 0.0.0.0:$PORT -w 4 -k uvicorn.workers.UvicornWorker waldobook.main:app
