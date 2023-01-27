@@ -11,4 +11,4 @@ const TreasureSchema = new mongoose.Schema({
 });
 
 module.exports =
-  mongoose.models.Treasure || mongoose.model("Treasure", TreasSchema);
+  mongoose.models.Treasure || mongoose.model("Treasure", TreasureSchema);
