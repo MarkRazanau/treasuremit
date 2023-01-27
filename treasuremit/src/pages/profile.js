@@ -1,6 +1,6 @@
 import React from "react";
 import MainNavBar from "../../components/MainNavBar";
-import dbConnect from "../../lib/dbConnect";
+import dbConnect from "../../serv/dbConnect";
 import User from "./api/models/User";
 
 export default function Profile({ users }) {

@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-import dbConnect from "../../../lib/dbConnect";
+import dbConnect from "../../../serv/dbConnect";
 import Treasure from "./models/Treasure";
 
 export default async function handler(req, res) {

@@ -5,7 +5,7 @@ import Map from "../../components/Map";
 import { useRouter } from "next/router";
 import { userInfo } from "os";
 import Treasure from "./api/models/Treasure";
-import dbConnect from "../../lib/dbConnect";
+import dbConnect from "../../serv/dbConnect";
 
 export default function TreasureMap({ treasures }) {
   console.log(treasures);
