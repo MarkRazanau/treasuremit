@@ -1,0 +1,9 @@
+setup:
+  addons:
+    - plan: heroku-postgresql
+      as: DATABASE
+build:
+  docker:
+    web: waldobook/Dockerfile
+run:
+  web: gunicorn -b 0.0.0.0:80 -w 4 -k uvicorn.workers.UvicornWorker waldobook.main:app
