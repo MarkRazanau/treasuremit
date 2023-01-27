@@ -2,10 +2,12 @@ import React from 'react'
 import Image from 'next/image'
 import background from "../../public/mittreasure.png"
 import mascot from "../../public/beaver.png"
+import LogNavBar from "../../components/LogNavBar"
 
 export default function Main(){
     return(
         <div className="Login-page">
+            <LogNavBar/>
             <div className="Login-container-shadow"></div>
             <div className="Login-beaver-wrapper">
                 <Image className="Login-beaver" src={mascot} alt="TreasureMIT Beaver"/>

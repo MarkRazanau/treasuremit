@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { GoogleMap, useLoadScript, CircleF } from "@react-google-maps/api";
-import NavBar from "../../components/NavBar";
+import MainNavBar from "../../components/MainNavBar";
 import Map from "../../components/Map";
 
 export default function TreasureMap() {
@@ -11,14 +11,14 @@ export default function TreasureMap() {
   if (!isLoaded) {
     return (
       <div>
-        <NavBar />
+        <MainNavBar />
         <div>Looking for Treasure Map...</div>
       </div>
     );
   }
   return (
     <div className="map-wrapper">
-      <NavBar />
+      <MainNavBar />
       <Map />
     </div>
   );

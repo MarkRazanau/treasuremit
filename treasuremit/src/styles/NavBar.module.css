@@ -18,6 +18,11 @@
 .items{
     margin-left: 40px;
     font-size:18px;
+    color: black;
+}
+
+.items:link, .items:visited, .items:hover, .items:active{
+    text-decoration: none;
 }
 
 .itemContainer{

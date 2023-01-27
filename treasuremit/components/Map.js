@@ -6,6 +6,7 @@ import {
   MarkerF,
   InfoWindow,
 } from "@react-google-maps/api";
+import mapStyle from "../src/styles/Map.module.css";
 
 const fake_treasures = [
   {
@@ -166,7 +167,6 @@ export default function Map() {
   mitCoords.map((LatLong) =>
     mitPolyCoords.push({ lat: LatLong[1], lng: LatLong[0] })
   );
-  console.log(mitPolyCoords);
 
   let maxLatitude = (Math.atan(Math.sinh(Math.PI)) * 180) / Math.PI;
 
@@ -182,25 +182,46 @@ export default function Map() {
     worldPolyCoords.push({ lat: LatLong[1], lng: LatLong[0] })
   );
 
+  const mapRef = useRef();
   const mitCenter = useMemo(
     () => ({ lat: 42.35904341235203, lng: -71.0942029172697 }),
     []
   );
 
-  // const mapRef = React.useRef();
-  // const onMapLoad = React.useCallback((map) => {
-  //   mapRef.current = map;
-  // }, []);
+  const options = useMemo(
+    () => ({
+      disableDefaultUI: true,
+      clickableIcons: false,
+      mapId: "f4a68acad93f264f",
+    }),
+    []
+  );
+
+  const restrictions = useMemo(
+    () => ({
+      latLngBounds: {
+        north: 42.42,
+        south: 42.24,
+        west: -71.27,
+        east: -70.85,
+      },
+      strictBounds: false,
+    }),
+    []
+  );
+
+  const onLoad = useCallback((map) => (mapRef.current = map), []);
 
   const [selected, setSelected] = useState(null);
-  const [polyBoundaries, setPolyBoundaries] = useState(null);
 
   return (
     <GoogleMap
       zoom={16}
       center={mitCenter}
       mapContainerClassName="map-container"
-      // onLoad={setPolyBoundaries(true)}
+      options={options}
+      onLoad={onLoad}
+      restriction={restrictions}
     >
       <Polygon
         paths={[worldPolyCoords, mitPolyCoords.reverse()]}
@@ -217,12 +238,12 @@ export default function Map() {
           <CircleF
             key={idx}
             center={{ lat: treasure["lat"], lng: treasure["long"] }}
-            radius={100}
-            onLoad={() => console.log("Circle Load...")}
+            radius={60}
             options={{
-              fillColor: "red",
-              strokeColor: "red",
-              strokeOpacity: 0.8,
+              fillColor: "#9c1414",
+              fillOpacity: 0.4,
+              strokeColor: "#9c1414",
+              strokeOpacity: 0.7,
             }}
             onClick={() => {
               setSelected(treasure);
@@ -230,20 +251,19 @@ export default function Map() {
           />
         );
       })}
-      {selected
-        ? console.log(selected)
-        : // <InfoWindow
-          //   position={{ lat: selected["lat"], lng: selected["lng"] }}
-          //   onCloseClick={() => {
-          //     setSelected(null);
-          //   }}
-          // >
-          //   <div>
-          //     <h2>Clue</h2>
-          //     <p>{selected["clue"]}</p>
-          //   </div>
-          // </InfoWindow>
-          null}
+      {selected && (
+        <InfoWindow
+          position={{ lat: selected["lat"] + 0.0007, lng: selected["long"] }}
+          onCloseClick={() => {
+            setSelected(null);
+          }}
+        >
+          <div>
+            <h2 className="infoTitle">Clue</h2>
+            <p className="infoClue">{selected["clue"]}</p>
+          </div>
+        </InfoWindow>
+      )}
       {/* {
         mapPath.map(())
       } */}

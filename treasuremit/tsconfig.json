@@ -19,6 +19,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/utilities.js", "src/pages/treasuremap.js", "src/pages/treasuremap.js", "components/NavBar.js", "components/NavBar.js", "src/pages/_document.js", "src/pages/api/treasures.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/utilities.js", "src/pages/treasuremap.js", "src/pages/treasuremap.js", "components/MainNavBar.js", "components/MainNavBar.js", "src/pages/_document.js", "src/pages/api/treasures.js"],
   "exclude": ["node_modules"]
 }
