@@ -4,11 +4,9 @@ import { useRouter } from "next/router";
 export default function Redirect() {
   const router = useRouter();
   const { code } = router.query;
-  console.log(process.env.PORT, "abc");
 
   useEffect(() => {
     if (!code) {
-      console.log("ERROR");
       return;
     }
 
@@ -33,21 +31,25 @@ export default function Redirect() {
       });
       const jsonResponse = await response.json();
       const myHeaders = new Headers();
-      console.log(jsonResponse["access_token "]);
       myHeaders.append(
         "Authorization",
         "Bearer " + jsonResponse["access_token"]
       );
 
+      const userObj = {};
       const userInfo = await fetch("https://oidc.mit.edu/userinfo", {
         method: "GET",
         headers: myHeaders,
         redirect: "follow",
       })
         .then((response) => response.json())
-        .then((info) => console.log(info));
-
-      await router.replace("/treasuremap");
+        .then((info) =>
+          Object.assign(userObj, {
+            name: info["given_name"],
+            email: info["email"],
+          })
+        );
+      await router.replace({ pathname: "/treasuremap", query: userObj });
     };
     returnUserID();
   }, [code]);
