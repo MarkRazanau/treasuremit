@@ -31,7 +31,22 @@ export default function Redirect() {
         },
         body: new URLSearchParams(objectWithData),
       });
-      console.log(await response.json());
+      const jsonResponse = await response.json();
+      const myHeaders = new Headers();
+      console.log(jsonResponse["access_token "]);
+      myHeaders.append(
+        "Authorization",
+        "Bearer " + jsonResponse["access_token"]
+      );
+
+      const userInfo = await fetch("https://oidc.mit.edu/userinfo", {
+        method: "GET",
+        headers: myHeaders,
+        redirect: "follow",
+      })
+        .then((response) => response.json())
+        .then((info) => console.log(info));
+
       await router.replace("/treasuremap");
     };
     returnUserID();
