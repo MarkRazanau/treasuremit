@@ -5,7 +5,9 @@ import Link from "next/link";
 export default function NavBar() {
   return (
     <nav className={styles.container}>
-      <div className={styles.name}>TreasureMIT</div>
+      <Link href="/treasuremap" className={styles.name}>
+        TreasureMIT
+      </Link>
       <div className={styles.itemContainer}>
         <Link href="/treasuremap" className={styles.items}>
           Map

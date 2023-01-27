@@ -8,44 +8,7 @@ import {
 } from "@react-google-maps/api";
 import mapStyle from "../src/styles/Map.module.css";
 
-const fake_treasures = [
-  {
-    clue: "newest clue",
-    long: -71.096775,
-    lat: 42.359767,
-    uuid: "db9500f1-9ba2-44f3-befe-6d5d89738789",
-    treasure: {
-      name: "hello",
-      description: "world",
-      uuid: "abc123",
-      is_active: true,
-    },
-    placed_by: {
-      sub: "3d80c013d0d0f2379622acf1f324c6fa",
-      is_active: true,
-    },
-    placed_at: "2023-01-24T19:03:07",
-  },
-  {
-    clue: "now its in a new place",
-    long: -71.09138,
-    lat: 42.359156,
-    uuid: "6f33f91b-7ce7-415e-ac37-db10e10e40b0",
-    treasure: {
-      name: "new treasure",
-      description: "its new",
-      uuid: "eefb0268-fbaf-4065-a16e-ec87444a1eab",
-      is_active: true,
-    },
-    placed_by: {
-      sub: "3d80c013d0d0f2379622acf1f324c6fa",
-      is_active: true,
-    },
-    placed_at: "2023-01-24T20:32:19",
-  },
-];
-
-export default function Map() {
+export default function Map(treasures) {
   const mitCoords = [
     [-71.1050195, 42.3552809],
     [-71.1049399, 42.3554614],
@@ -232,8 +195,7 @@ export default function Map() {
         paths={[mitPolyCoords]}
         options={{ fillOpacity: 0, fillColor: "#000000", strokeOpacity: 0 }}
       /> */}
-
-      {fake_treasures.map((treasure, idx) => {
+      {treasures.props.map((treasure, idx) => {
         return (
           <CircleF
             key={idx}

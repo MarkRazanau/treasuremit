@@ -7,6 +7,8 @@
   --lblue: #CEEBFB;
   --blue: #A3D6F5;
   --dblue: #7fc2e0;
+  --beige: #f6ebd1;
+
 }
 
 
@@ -88,9 +90,11 @@
   transform: translate(-50%, -50%);
 }
 
-body{
+html, body{
   margin:0;
   padding:0;
+  background-color: var(--beige);
+
 }
 
 .Login-info{
@@ -126,4 +130,8 @@ body{
 
 .infoClue{
   margin:5px;
+}
+
+.Profile-wrapper{
+  background-color: #f6ebd1;
 }

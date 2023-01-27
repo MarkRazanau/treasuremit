@@ -5,7 +5,7 @@ export default function Chest() {
   return (
     <div>
       <MainNavBar />
-      <div></div>
+      <div>Welcome to your chest page!</div>
     </div>
   );
 }

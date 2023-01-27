@@ -14,6 +14,11 @@
     font-size: 30px;
 }
 
+.name:link, .name:visited, .name:hover, .name:active{
+    text-decoration: none;
+    color: black
+}
+
 
 .items{
     margin-left: 40px;
