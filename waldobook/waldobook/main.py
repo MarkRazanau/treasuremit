@@ -56,8 +56,8 @@ def get_db():
 
 
 ALGORITHM = "RS256"
-JWK_PUBLIC_KEY = os.getenv('JWK_PUBLIC_KEY')
-MIT_OAUTH2_CLIENT_ID = os.getenv('MIT_OAUTH2_CLIENT_ID')
+JWK_PUBLIC_KEY = os.getenv("JWK_PUBLIC_KEY") or ""
+MIT_OAUTH2_CLIENT_ID = os.getenv("MIT_OAUTH2_CLIENT_ID")
 
 
 async def get_current_user(
@@ -78,10 +78,7 @@ async def get_current_user(
         user = schemas.UserBase(sub=sub)
     except JWTError:
         raise credentials_exception
-    user = crud.get_user(db, user_sub=user.sub)
-    if user is None:
-        raise credentials_exception
-    return user
+    return crud.get_or_create_user(db, user_sub=user.sub)
 
 
 async def get_current_active_user(

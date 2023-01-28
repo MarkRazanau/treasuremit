@@ -5,8 +5,14 @@ from sqlalchemy.orm import Session
 from . import models, schemas
 
 
-def get_user(db: Session, user_sub: str):
-    return db.query(models.User).filter(models.User.sub == user_sub).first()
+def get_or_create_user(db: Session, user_sub: str):
+    user = db.query(models.User).filter(models.User.sub == user_sub).first()
+    if user is None:
+        user = models.User(sub=user_sub)
+        db.add(user)
+        db.commit()
+        db.refresh(user)
+    return user
 
 
 def get_treasures(db: Session):
