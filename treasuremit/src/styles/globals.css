@@ -135,3 +135,27 @@ html, body{
 .Profile-wrapper{
   background-color: #f6ebd1;
 }
+
+.Login-loading{
+  height:471px;
+  width:364px;
+  position:absolute;
+  left:50%;
+  transform: translateX(-50%);
+  animation-name: armsMoving;
+  animation-duration:12s;
+  animation-iteration-count: infinite;
+  animation-timing-function: cubic-bezier(.26,-0.02,.73,.98);
+}
+
+@keyframes armsMoving {
+  0% {left:50%;
+    top:15%;
+    transform: translateX(-50%);}
+  50% {left:50%;
+    top:-3%;
+    transform: translateX(-50%);}
+  100% {left:50%;
+    top:15%;
+    transform: translateX(-50%);}
+}

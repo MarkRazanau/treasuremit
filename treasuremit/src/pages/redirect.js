@@ -13,8 +13,8 @@ export default function Redirect() {
     let objectWithData = {
       grant_type: "authorization_code",
       code: code,
-      // redirect_uri: "http://localhost:3000/redirect",
-      redirect_uri: "https://treasuremit.herokuapp.com/redirect",
+      redirect_uri: "http://localhost:3000/redirect",
+      // redirect_uri: "https://treasuremit.herokuapp.com/redirect",
       client_id: "baa96962-f4a6-4451-9c04-1fcf05c46c12",
       client_secret:
         "M5w0HVzW7szOSXGl2mk7kOykzShEkK7kc8pXZZKTCihNoCqAbEXSTU4Do92ysi9X_7SJMgSvQQIk2vxKhcaCzw",
