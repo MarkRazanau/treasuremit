@@ -5,6 +5,7 @@ from typing import List
 
 import qrcode
 from fastapi import Depends, FastAPI, HTTPException, Response, status
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2AuthorizationCodeBearer
@@ -37,6 +38,14 @@ def custom_openapi():
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.openapi = custom_openapi
 
