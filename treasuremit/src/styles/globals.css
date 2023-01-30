@@ -159,3 +159,10 @@ html, body{
     top:15%;
     transform: translateX(-50%);}
 }
+
+.TreasureFound-container{
+  display: flex;
+  flex-wrap:wrap;
+  justify-content: center;
+  padding: 10px calc((100% - (590px * 3)) / 2)
+}

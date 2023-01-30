@@ -18,6 +18,9 @@ export default function NavBar() {
         <Link href="/profile" className={styles.items}>
           Profile
         </Link>
+        <Link href="/" className={styles.items}>
+          Logout
+        </Link>
       </div>
     </nav>
   );

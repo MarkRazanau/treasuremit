@@ -12,11 +12,13 @@ from fastapi.security import OAuth2AuthorizationCodeBearer
 from jose import JWTError, jwt
 from sqlalchemy.orm import Session
 
-from . import crud, models, schemas
-from .database import SessionLocal, engine
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 waldobook_dir = os.path.dirname(script_dir)
+
+
+from . import crud, models, schemas
+from .database import SessionLocal, engine
 
 # This makes swagger use id_token instead of access_token
 def custom_openapi():

@@ -4,8 +4,6 @@ import dbConnect from "../../serv/dbConnect";
 import User from "./api/models/User";
 
 export default function Profile({ users }) {
-  console.log(users);
-
   return (
     <div className="Profile-wrapper">
       <MainNavBar />

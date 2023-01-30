@@ -1,0 +1,21 @@
+.container{
+    height:400px;
+    margin: 3em 10vh;
+    background-color: white;
+    flex: 0 0 350px;
+    border-radius: 15px;
+
+
+}
+
+.textContainer{
+    margin: 15px 20px;
+}
+
+.title{
+    font-size:30px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: underline;
+    margin-bottom: 20px;
+}
