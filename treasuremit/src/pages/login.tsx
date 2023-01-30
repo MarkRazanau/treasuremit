@@ -20,7 +20,7 @@ export default function Login(){
                     <input className='Login-pswdinput' type='password' placeholder=' '></input>
                     <label className="Login-pswd"> Password </label>
                 </div>
-                <a href="https://oidc.mit.edu/authorize?client_id=baa96962-f4a6-4451-9c04-1fcf05c46c12&response_type=code&scope=openid phone email profile&redirect_uri=http://localhost:3000/redirect" className='Login-submit'>Continue With MIT ID</a>
+                <a href="https://oidc.mit.edu/authorize?client_id=baa96962-f4a6-4451-9c04-1fcf05c46c12&response_type=code&scope=openid phone email profile&redirect_uri=https://treasuremit.herokuapp.com/redirect" className='Login-submit'>Continue With MIT ID</a>
                 {/* <a href="https://oidc.mit.edu/authorize?client_id=baa96962-f4a6-4451-9c04-1fcf05c46c12&response_type=code&scope=openid phone email profile&redirect_uri=https://treasuremit.herokuapp.com/redirect" className='Login-submit'>Continue With MIT ID</a> */}
                 {/* <button className="Login-submit">Start Hunting!</button> */}
             </div>
