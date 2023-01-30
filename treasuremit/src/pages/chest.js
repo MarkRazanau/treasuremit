@@ -26,8 +26,9 @@ export default function Chest({ users }) {
   let treasuresList = null;
   const hasTreasures = treasuresFound.length !== 0;
   if (hasTreasures) {
-    treasuresList = treasuresFound.map((treasureObj) => (
+    treasuresList = treasuresFound.map((treasureObj, idx) => (
       <TreasureCard
+        key={idx}
         treasure_name={treasureObj.placement.treasure.name}
         clue={treasureObj.placement.clue}
         description={treasureObj.placement.treasure.name}
