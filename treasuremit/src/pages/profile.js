@@ -1,13 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import MainNavBar from "../../components/MainNavBar";
 import dbConnect from "../../serv/dbConnect";
 import User from "./api/models/User";
 
-export default function Profile({ users }) {
+export default function Profile() {
+  const router = useRouter();
+  const [userinfo, setUserinfo] = useState(undefined);
+
+  useEffect(() => {
+    fetch("https://oidc.mit.edu/userinfo", {
+      method: "GET",
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("access_token"),
+        Accept: "application/json, text/plain, */*",
+      },
+    }).then((response) => {
+      if (response.ok)
+        response.json().then((data) => {
+          setUserinfo(data);
+        });
+      else router.replace({ pathname: "/logout" });
+    });
+  }, []);
+
   return (
     <div className="Profile-wrapper">
       <MainNavBar />
       <div>Welcome to your profile page!</div>
+      <div>{JSON.stringify(userinfo)}</div>
     </div>
   );
 }

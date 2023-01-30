@@ -30,6 +30,8 @@ export default function Redirect() {
         body: new URLSearchParams(objectWithData),
       });
       const jsonResponse = await response.json();
+      localStorage.setItem("id_token", jsonResponse["id_token"]);
+      localStorage.setItem("access_token", jsonResponse["access_token"]);
       const myHeaders = new Headers();
       myHeaders.append(
         "Authorization",

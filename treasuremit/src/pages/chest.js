@@ -1,40 +1,26 @@
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import MainNavBar from "../../components/MainNavBar";
 import TreasureCard from "../../components/TreasureCard.js";
 
 export default function Chest({ users }) {
   const [treasuresFound, setTreasuresFound] = useState([]);
-  const myTreasures = [
-    {
-      treasure_name: "waldo",
-      clue: "it was here",
-      description: "it was actuall here",
-      date_found: "right now",
-    },
-    {
-      treasure_name: "waldo",
-      clue: "it was here",
-      description: "it was actuall here",
-      date_found: "right now",
-    },
-    {
-      treasure_name: "waldo",
-      clue: "it was here",
-      description: "it was actuall here",
-      date_found: "right now",
-    },
-    {
-      treasure_name: "waldo",
-      clue: "it was here",
-      description: "it was actuall here",
-      date_found: "right now",
-    },
-  ];
+  const router = useRouter();
 
-  // called when the "Feed" component "mounts", i.e.
-  // when it shows up on screen
   useEffect(() => {
-    setTreasuresFound(myTreasures);
+    fetch("https://waldobook.herokuapp.com/user/finds", {
+      method: "GET",
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("id_token"),
+        Accept: "application/json, text/plain, */*",
+      },
+    }).then((response) => {
+      if (response.ok)
+        response.json().then((data) => {
+          setTreasuresFound(data);
+        });
+      else router.replace({ pathname: "/logout" });
+    });
   }, []);
 
   let treasuresList = null;
@@ -42,10 +28,10 @@ export default function Chest({ users }) {
   if (hasTreasures) {
     treasuresList = treasuresFound.map((treasureObj) => (
       <TreasureCard
-        treasure_name={treasureObj.treasure_name}
-        clue={treasureObj.clue}
-        description={treasureObj.description}
-        date_found={treasureObj.date_found}
+        treasure_name={treasureObj.placement.treasure.name}
+        clue={treasureObj.placement.clue}
+        description={treasureObj.placement.treasure.name}
+        date_found={treasureObj.found_at}
       />
     ));
   } else {
