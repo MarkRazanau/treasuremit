@@ -1,4 +1,10 @@
-import React, { useMemo, useRef, useCallback, useState } from "react";
+import React, {
+  useMemo,
+  useRef,
+  useCallback,
+  useState,
+  useEffect,
+} from "react";
 import {
   GoogleMap,
   CircleF,
@@ -175,59 +181,139 @@ export default function Map(treasures) {
   const onLoad = useCallback((map) => (mapRef.current = map), []);
 
   const [selected, setSelected] = useState(null);
+  const [caches, setCaches] = useState([]);
+
+  useEffect(() => {
+    console.log(caches);
+  }, [caches]);
+
+  const [settingTreasure, setSettingTreasure] = useState(false);
+  const [popupTreasure, setPopupTreasure] = useState(false);
+
+  function settingNewTreasure() {
+    setSettingTreasure(true);
+  }
+
+  function cancelNewTreasure() {
+    setSettingTreasure(false);
+  }
+
+  function getNewLocation(coord) {
+    if (settingTreasure) {
+      console.log(coord.latLng.lat());
+      console.log(coord.latLng.lng());
+      setPopupTreasure(true);
+      setSettingTreasure(false);
+    }
+  }
+
+  function closeModal() {
+    setPopupTreasure(false);
+  }
 
   return (
-    <GoogleMap
-      zoom={16}
-      center={mitCenter}
-      mapContainerClassName="map-container"
-      options={options}
-      onLoad={onLoad}
-      restriction={restrictions}
-    >
-      <Polygon
-        paths={[worldPolyCoords, mitPolyCoords.reverse()]}
-        options={{ fillOpacity: 0.3, fillColor: "#000000", strokeOpacity: 0 }}
-      />
+    <div>
+      {settingTreasure && (
+        <div className="TreasureMap-setInfo">
+          Click On The Map to Place Your Treasure
+        </div>
+      )}
+      {settingTreasure && (
+        <div className="TreasureMap-button-cancel" onClick={cancelNewTreasure}>
+          <div className="TreasureMap-cancel-text">
+            <strong>Cancel</strong>
+          </div>
+        </div>
+      )}
+      {!settingTreasure && (
+        <div className="TreasureMap-button" onClick={settingNewTreasure}>
+          <div className="TreasureMap-button-text">Create New Treasure</div>
+        </div>
+      )}
 
-      {/* <Polygon
+      <GoogleMap
+        zoom={16}
+        center={mitCenter}
+        mapContainerClassName="map-container"
+        options={options}
+        onLoad={onLoad}
+        restriction={restrictions}
+        // onClick={(coord) => {
+        //   setCaches([...caches, [coord.latLng.lat(), coord.latLng.lng()]]);
+        // }}
+        onClick={getNewLocation}
+      >
+        <Polygon
+          paths={[mitPolyCoords.reverse(), worldPolyCoords]}
+          options={{ fillOpacity: 0.3, fillColor: "#000000", strokeOpacity: 0 }}
+        />
+
+        {/* <Polygon
         paths={[mitPolyCoords]}
         options={{ fillOpacity: 0, fillColor: "#000000", strokeOpacity: 0 }}
       /> */}
-      {treasures.props.map((treasure, idx) => {
-        return (
-          <CircleF
-            key={idx}
-            center={{ lat: treasure["lat"], lng: treasure["long"] }}
-            radius={60}
-            options={{
-              fillColor: "#9c1414",
-              fillOpacity: 0.4,
-              strokeColor: "#9c1414",
-              strokeOpacity: 0.7,
+        {treasures.props.map((treasure, idx) => {
+          return (
+            <CircleF
+              key={idx}
+              center={{ lat: treasure["lat"], lng: treasure["long"] }}
+              radius={60}
+              options={{
+                fillColor: "#9c1414",
+                fillOpacity: 0.4,
+                strokeColor: "#9c1414",
+                strokeOpacity: 0.7,
+              }}
+              onClick={() => {
+                setSelected(treasure);
+              }}
+            />
+          );
+        })}
+        {selected && (
+          <InfoWindow
+            position={{ lat: selected["lat"] + 0.0007, lng: selected["long"] }}
+            onCloseClick={() => {
+              setSelected(null);
             }}
-            onClick={() => {
-              setSelected(treasure);
-            }}
-          />
-        );
-      })}
-      {selected && (
-        <InfoWindow
-          position={{ lat: selected["lat"] + 0.0007, lng: selected["long"] }}
-          onCloseClick={() => {
-            setSelected(null);
-          }}
-        >
-          <div>
-            <h2 className="infoTitle">Clue</h2>
-            <p className="infoClue">{selected["clue"]}</p>
-          </div>
-        </InfoWindow>
-      )}
-      {/* {
+          >
+            <div>
+              <h2 className="infoTitle">Clue</h2>
+              <p className="infoClue">{selected["clue"]}</p>
+            </div>
+          </InfoWindow>
+        )}
+        {/* {
         mapPath.map(())
       } */}
-    </GoogleMap>
+      </GoogleMap>
+
+      {popupTreasure && (
+        <div className="TreasureMap-modal">
+          <div className="TreasureMap-modal-overlay"></div>
+          <div className="TreasureMap-modal-content">
+            <h1>Set Up Your Treasure!</h1>
+            <p className="Modal-inputText">Treasure Clue:</p>
+            <textarea className="Modal-inputs"></textarea>
+            <p className="Modal-inputText">Treasure Description:</p>
+            <textarea className="Modal-inputs"></textarea>
+            <div>
+              <button
+                className="TreasureMap-modal-close-btn"
+                onClick={closeModal}
+              >
+                Cancel
+              </button>
+              <button
+                className="TreasureMap-modal-submit-btn"
+                onClick={closeModal}
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }

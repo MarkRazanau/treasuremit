@@ -166,3 +166,143 @@ html, body{
   justify-content: center;
   padding: 10px calc((100% - (590px * 3)) / 2)
 }
+
+.TreasureMap-button{
+  height:65px;
+  width:175px;
+  position: absolute;
+  top:90%;
+  left:50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  background: radial-gradient(circle, var(--lblue) 0%, var(--blue) 57%, var(--dblue) 100%);
+  box-shadow: 0 0 1em #2d4550;
+}
+
+.TreasureMap-button:hover{
+  cursor:pointer;
+  background: radial-gradient(circle, #c2e7fc 0%, #92d0f7 57%, #76a8c7 100%);
+
+}
+
+.TreasureMap-button-text{
+  pointer-events: none;
+  font-family:"solitreo";
+  font-size: 18px;
+  padding-top: 5px;
+}
+
+.TreasureMap-cancel-text{
+  pointer-events: none;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 18px;
+}
+
+
+
+.TreasureMap-button-cancel{
+  height:30px;
+  width:85px;
+  position: absolute;
+  top:92%;
+  left:50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap:5px;
+  border-radius: 30px;
+  background: radial-gradient(circle, #e6e7e7 0%, #b3b8b9 80%, #a1a7a8 100%);
+  box-shadow: 0 0 1em #4b4e4e;
+}
+
+.TreasureMap-button-cancel:hover{
+  cursor:pointer;
+  background: radial-gradient(circle, #d8dada 0%, #969a9b 100%, #818686 100%);
+}
+
+.TreasureMap-setInfo{
+  position:absolute;
+  z-index: 10;
+  top:10%;
+  left:50%;
+  transform: translateX(-50%);
+  font-size: 26px;
+  font-family: "solitreo";
+  background:rgba(246,235,209,0.95);
+  padding-left: 10px;
+  padding-right:10px;
+  padding-top: 10px;
+  padding-bottom:3px;
+  border-radius: 5px;
+  box-shadow: 0 0 1em rgb(172, 164, 146);
+  pointer-events: none;
+  text-align: center;
+
+}
+
+.TreasureMap-modal, .TreasureMap-modal-overlay {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  z-index: 20;
+}
+
+.TreasureMap-modal-overlay {
+  background: rgba(49,49,49,0.8);
+}
+
+.TreasureMap-modal-content {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 1.4;
+  background: #f1f1f1;
+  padding: 14px 28px;
+  border-radius: 3px;
+  max-width: 600px;
+  min-width: 300px;
+  z-index: 20;
+}
+
+.TreasureMap-modal-submit-btn{
+  position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding: 5px 7px;
+    z-index:20;
+}
+
+.TreasureMap-modal-close-btn{
+  position: absolute;
+    bottom: 10px;
+    right: 75px;
+    padding: 5px 7px;
+    z-index:20;
+}
+
+.Modal-inputs{
+  margin:0px;
+  margin-bottom: 35px;
+  width:300px;
+  height:100px;
+  padding-left: 10px;
+  padding-right: 5px;
+  padding-top:10px;
+  padding-bottom:10px;
+  resize: none;
+}
+
+.Modal-inputText{
+  margin:0px;
+}
