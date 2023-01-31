@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, componentDidMount } from "react";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import MainNavBar from "../../components/MainNavBar";
 import dbConnect from "../../serv/dbConnect";
 import User from "./api/models/User";
+import Avatar from "../../components/Avatar";
+import scroll from "../../public/profile_scroll.png";
 
 export default function Profile() {
   const router = useRouter();
@@ -32,7 +35,11 @@ export default function Profile() {
   return (
     <div className="Profile-wrapper">
       <MainNavBar username={userName} />
-      <div>Welcome to your profile page!</div>
+      <Image className="Profile-scroll" src={scroll} />
+      <div className="Profile-welcome">Hey, {userName}!</div>
+      <div className="Avatar-container">
+        <Avatar />
+      </div>
       <div>{JSON.stringify(userinfo)}</div>
     </div>
   );

@@ -293,6 +293,8 @@ export default function Map(treasures) {
           <div className="TreasureMap-modal-overlay"></div>
           <div className="TreasureMap-modal-content">
             <h1>Set Up Your Treasure!</h1>
+            <p className="Modal-inputText">Treasure Name:</p>
+            <input type="text" className="Modal-inputName"></input>
             <p className="Modal-inputText">Treasure Clue:</p>
             <textarea className="Modal-inputs"></textarea>
             <p className="Modal-inputText">Treasure Description:</p>

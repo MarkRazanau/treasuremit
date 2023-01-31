@@ -42,13 +42,30 @@
   left:50%;
   top:75%;
   transform: translateX(-50%);
-  background: radial-gradient(circle, var(--lblue) 0%, var(--blue) 57%, var(--dblue) 100%);
+  background: radial-gradient(circle, var(--lblue) 0%, var(--blue) 75%, var(--dblue) 100%);
   height: 3rem;
-  width: 85%;
+  width: 75%;
   border-radius: 15rem;
   border:none;
-  font-family: 'Solitreo', cursive;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
+}
+
+.Login-submit-text{
+  font-family: 'Solitreo', cursive;
+  font-size: 25px;
+  padding-top: 5px;
+}
+
+.Login-submit:hover{
+  background: radial-gradient(circle, #c2e7fc 0%, #92d0f7 57%, #76a8c7 100%);
+}
+
+.Login-submit:link, .Login-submit:visited, .Login-submit:hover, .Login-submit:active{
+  text-decoration: none;
+  color: black
 }
 
 .Login-welcome{
@@ -168,7 +185,7 @@ html, body{
 }
 
 .TreasureMap-button{
-  height:65px;
+  height:55px;
   width:175px;
   position: absolute;
   top:90%;
@@ -293,7 +310,7 @@ html, body{
 
 .Modal-inputs{
   margin:0px;
-  margin-bottom: 35px;
+  margin-bottom: 25px;
   width:300px;
   height:100px;
   padding-left: 10px;
@@ -305,4 +322,41 @@ html, body{
 
 .Modal-inputText{
   margin:0px;
+}
+
+.Modal-inputName{
+  width:308px;
+  margin-bottom: 25px;
+  padding-left: 10px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.Profile-welcome{
+  position:absolute;
+  transform: translateX(-50%);
+  left:50%;
+  font-size: 100px;
+  font-family: "Solitreo";
+}
+
+.Profile-scroll{
+  position:absolute;
+  width:95%;
+  height:94vh;
+  left:50%;
+  top:50px;
+  transform: translateX(-50%);
+}
+
+.Avatar-container{
+  position:absolute;
+  border-radius: 10px;
+  height:247px;
+  width:220px;
+  outline: 5px solid rgb(166,115,69);
+  background-color: rgba(166,115,69,0.2);
+  box-shadow: 0 0 1em rgb(77, 53, 32);
+  left:22%;
+  top:32%;
 }
