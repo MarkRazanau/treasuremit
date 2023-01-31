@@ -7,12 +7,17 @@ import User from "./api/models/User";
 export default function Profile() {
   const router = useRouter();
   const [userinfo, setUserinfo] = useState(undefined);
+  const [userName, setUserName] = useState("Profile");
+
+  useEffect(() => {
+    setUserName(localStorage.getItem("username"));
+  }, []);
 
   useEffect(() => {
     fetch("https://oidc.mit.edu/userinfo", {
       method: "GET",
       headers: {
-        "Authorization": "Bearer " + localStorage.getItem("access_token"),
+        Authorization: "Bearer " + localStorage.getItem("access_token"),
         Accept: "application/json, text/plain, */*",
       },
     }).then((response) => {
@@ -26,7 +31,7 @@ export default function Profile() {
 
   return (
     <div className="Profile-wrapper">
-      <MainNavBar />
+      <MainNavBar username={userName} />
       <div>Welcome to your profile page!</div>
       <div>{JSON.stringify(userinfo)}</div>
     </div>

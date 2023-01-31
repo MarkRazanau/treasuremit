@@ -4,14 +4,17 @@ import MainNavBar from "../../components/MainNavBar";
 import TreasureCard from "../../components/TreasureCard.js";
 
 export default function Chest({ users }) {
+  const [userName, setUserName] = useState("Profile");
   const [treasuresFound, setTreasuresFound] = useState([]);
   const router = useRouter();
-
+  useEffect(() => {
+    setUserName(localStorage.getItem("username"));
+  }, []);
   useEffect(() => {
     fetch("https://waldobook.herokuapp.com/user/finds", {
       method: "GET",
       headers: {
-        "Authorization": "Bearer " + localStorage.getItem("id_token"),
+        Authorization: "Bearer " + localStorage.getItem("id_token"),
         Accept: "application/json, text/plain, */*",
       },
     }).then((response) => {
@@ -41,7 +44,7 @@ export default function Chest({ users }) {
 
   return (
     <div className="Chest-wrapper">
-      <MainNavBar />
+      <MainNavBar username={userName} />
       <div className="TreasureFound-container">{treasuresList}</div>
     </div>
   );

@@ -46,13 +46,9 @@ export default function Redirect() {
       })
         .then((response) => response.json())
         .then((info) =>
-          Object.assign(userObj, {
-            sub: info["sub"],
-            name: info["given_name"],
-            email: info["email"],
-          })
+          localStorage.setItem("username", info["preferred_username"])
         );
-      await router.replace({ pathname: "/treasuremap", query: userObj });
+      await router.replace({ pathname: "/treasuremap" });
     };
     returnUserID();
   }, [code]);

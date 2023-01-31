@@ -6,7 +6,6 @@ import {
   MarkerF,
   InfoWindow,
 } from "@react-google-maps/api";
-import mapStyle from "../src/styles/Map.module.css";
 
 export default function Map(treasures) {
   const mitCoords = [

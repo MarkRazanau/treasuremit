@@ -9,19 +9,14 @@ import dbConnect from "../../serv/dbConnect";
 
 export default function TreasureMap() {
   const [treasures, setTreasures] = useState([]);
+  const [userName, setUserName] = useState("Profile");
   const router = useRouter();
-
-  useEffect(() => {
-    let userInfo = router.query;
-    router.replace("/treasuremap", undefined, { shallow: true });
-    console.log("got it", userInfo);
-  }, []);
 
   useEffect(() => {
     fetch("https://waldobook.herokuapp.com/treasures", {
       method: "GET",
       headers: {
-        "Authorization": "Bearer " + localStorage.getItem("id_token"),
+        Authorization: "Bearer " + localStorage.getItem("id_token"),
         Accept: "application/json, text/plain, */*",
       },
     }).then((response) => {
@@ -33,6 +28,10 @@ export default function TreasureMap() {
     });
   }, []);
 
+  useEffect(() => {
+    setUserName(localStorage.getItem("username"));
+  }, []);
+
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
   });
@@ -40,14 +39,14 @@ export default function TreasureMap() {
   if (!isLoaded) {
     return (
       <div>
-        <MainNavBar props={userInfo} />
+        <MainNavBar username={userName} />
         <div>Looking for Treasure Map...</div>
       </div>
     );
   }
   return (
     <div className="map-wrapper">
-      <MainNavBar props={userInfo} />
+      <MainNavBar username={userName} />
       <Map props={treasures} />
     </div>
   );
