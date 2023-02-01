@@ -184,12 +184,12 @@ html, body{
   padding: 10px calc((100% - (590px * 3)) / 2)
 }
 
-.TreasureMap-button{
+.TreasureMap-button-new{
   height:55px;
   width:175px;
   position: absolute;
   top:90%;
-  left:50%;
+  left:43%;
   transform: translateX(-50%);
   z-index: 10;
   display: flex;
@@ -200,7 +200,23 @@ html, body{
   box-shadow: 0 0 1em #2d4550;
 }
 
-.TreasureMap-button:hover{
+.TreasureMap-button-held{
+  height:55px;
+  width:175px;
+  position: absolute;
+  top:90%;
+  left:57%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  background: radial-gradient(circle, var(--lblue) 0%, var(--blue) 57%, var(--dblue) 100%);
+  box-shadow: 0 0 1em #2d4550;
+}
+
+.TreasureMap-button-new:hover, .TreasureMap-button-held:hover{
   cursor:pointer;
   background: radial-gradient(circle, #c2e7fc 0%, #92d0f7 57%, #76a8c7 100%);
 
@@ -367,5 +383,33 @@ html, body{
   background-color: rgba(166,115,69,0.2);
   box-shadow: 0 0 1em rgb(77, 53, 32);
   left:22%;
-  top:32%;
+  top: 40%;
+}
+
+.Profile-stats{
+  position:absolute;
+  outline: 5px solid rgb(166,115,69);
+  background-color: rgba(166,115,69,0.2);
+  box-shadow: 0 0 1em rgb(77, 53, 32);
+  width: 450px;
+  height:350px;
+  left:50%;
+  top:35%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+.Profile-statHeader{
+  font-family: "Solitreo";
+  font-size:50px;
+  text-decoration: 3px underline;
+  margin-bottom: 10px;
+  margin-top:15px;
+}
+
+.Profile-statItems{
+  font-family: "Solitreo";
+  font-size:30px;
 }

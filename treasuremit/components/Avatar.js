@@ -20,7 +20,7 @@ export default function Avatar() {
   return (
     <div>
       <Image className={styles.container} src={beaver} />
-      <Image className={styles.container} src={eyeObj[eyeCostume]} />
+      <Image className={styles.container} src={eyeObj[3]} />
     </div>
   );
 }

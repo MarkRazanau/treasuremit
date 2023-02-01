@@ -13,22 +13,6 @@ export default function TreasureMap() {
   const router = useRouter();
 
   useEffect(() => {
-    fetch("https://waldobook.herokuapp.com/treasures", {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("id_token"),
-        Accept: "application/json, text/plain, */*",
-      },
-    }).then((response) => {
-      if (response.ok)
-        response.json().then((data) => {
-          setTreasures(data);
-        });
-      else router.replace({ pathname: "/logout" });
-    });
-  }, []);
-
-  useEffect(() => {
     setUserName(localStorage.getItem("username"));
   }, []);
 
@@ -47,7 +31,7 @@ export default function TreasureMap() {
   return (
     <div className="map-wrapper">
       <MainNavBar username={userName} />
-      <Map props={treasures} />
+      <Map />
     </div>
   );
 }

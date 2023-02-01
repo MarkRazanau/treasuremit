@@ -7,7 +7,10 @@ export default function Redirect() {
   useEffect(() => {
     localStorage.removeItem("id_token");
     localStorage.removeItem("access_token");
-    router.replace({pathname: "/"});
+    localStorage.removeItem("refresh_token");
+    localStorage.removeItem("username");
+    localStorage.removeItem("expires_in");
+    router.replace({ pathname: "/" });
   }, []);
 
   return (

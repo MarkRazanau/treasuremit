@@ -11,6 +11,7 @@ export default function Profile() {
   const router = useRouter();
   const [userinfo, setUserinfo] = useState(undefined);
   const [userName, setUserName] = useState("Profile");
+  const [treasuresFound, setTreasuresFound] = useState([]);
 
   useEffect(() => {
     setUserName(localStorage.getItem("username"));
@@ -31,16 +32,35 @@ export default function Profile() {
       else router.replace({ pathname: "/logout" });
     });
   }, []);
+  useEffect(() => {
+    fetch("https://waldobook.herokuapp.com/user/finds", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("id_token"),
+        Accept: "application/json, text/plain, */*",
+      },
+    }).then((response) => {
+      if (response.ok)
+        response.json().then((data) => {
+          setTreasuresFound(data);
+        });
+      else router.replace({ pathname: "/logout" });
+    });
+  }, []);
 
   return (
     <div className="Profile-wrapper">
       <MainNavBar username={userName} />
       <Image className="Profile-scroll" src={scroll} />
-      <div className="Profile-welcome">Hey, {userName}!</div>
       <div className="Avatar-container">
         <Avatar />
       </div>
-      <div>{JSON.stringify(userinfo)}</div>
+      <div className="Profile-stats">
+        <div className="Profile-statHeader">{userName}'s Profile</div>
+        <div className="Profile-statItems">
+          # of Treasures Found: {treasuresFound.length}
+        </div>
+      </div>
     </div>
   );
 }

@@ -32,6 +32,8 @@ export default function Redirect() {
       const jsonResponse = await response.json();
       localStorage.setItem("id_token", jsonResponse["id_token"]);
       localStorage.setItem("access_token", jsonResponse["access_token"]);
+      localStorage.setItem("refresh_token", jsonResponse["refresh_token"]);
+      localStorage.setItem("expires_in", jsonResponse["expires_in"]);
       const myHeaders = new Headers();
       myHeaders.append(
         "Authorization",
