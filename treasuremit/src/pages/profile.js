@@ -17,68 +17,68 @@ export default function Profile() {
   const [oldestTreasure, setOldestTreasure] = useState("N/A");
   const [newestTreasure, setNewestTreasure] = useState("N/A");
 
+  useEffect(() => {
+    setUserName(localStorage.getItem("username"));
+  }, []);
+
+  useEffect(() => {
+    fetch("https://oidc.mit.edu/userinfo", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("access_token"),
+        Accept: "application/json, text/plain, */*",
+      },
+    }).then((response) => {
+      if (response.ok)
+        response.json().then((data) => {
+          setUserinfo(data);
+        });
+      else router.replace({ pathname: "/logout" });
+    });
+  }, []);
+  useEffect(() => {
+    fetch("https://waldobook.herokuapp.com/user/finds", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("id_token"),
+        Accept: "application/json, text/plain, */*",
+      },
+    }).then((response) => {
+      if (response.ok)
+        response.json().then((data) => {
+          if (data.length) {
+            setNewestTreasure(data[0]["found_at"]);
+            setOldestTreasure(data[data.length - 1]["found_at"]);
+          }
+          setTreasuresFound(data);
+        });
+      else router.replace({ pathname: "/logout" });
+    });
+  }, []);
+
+  useEffect(() => {
+    fetch("https://waldobook.herokuapp.com/user", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("id_token"),
+        Accept: "application/json, text/plain, */*",
+      },
+    }).then((response) => {
+      if (response.ok)
+        response.json().then((data) => {
+          setUserCost(data["costume"]);
+        });
+      else router.replace({ pathname: "/logout" });
+    });
+  }, []);
+
+  useEffect(() => {
+    if (userCost === null) {
+      setUserCost("000");
+    }
+  }, [userCost]);
+
   try {
-    useEffect(() => {
-      setUserName(localStorage.getItem("username"));
-    }, []);
-
-    useEffect(() => {
-      fetch("https://oidc.mit.edu/userinfo", {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("access_token"),
-          Accept: "application/json, text/plain, */*",
-        },
-      }).then((response) => {
-        if (response.ok)
-          response.json().then((data) => {
-            setUserinfo(data);
-          });
-        else router.replace({ pathname: "/logout" });
-      });
-    }, []);
-    useEffect(() => {
-      fetch("https://waldobook.herokuapp.com/user/finds", {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("id_token"),
-          Accept: "application/json, text/plain, */*",
-        },
-      }).then((response) => {
-        if (response.ok)
-          response.json().then((data) => {
-            if (data.length) {
-              setNewestTreasure(data[0]["found_at"]);
-              setOldestTreasure(data[data.length - 1]["found_at"]);
-            }
-            setTreasuresFound(data);
-          });
-        else router.replace({ pathname: "/logout" });
-      });
-    }, []);
-
-    useEffect(() => {
-      fetch("https://waldobook.herokuapp.com/user", {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("id_token"),
-          Accept: "application/json, text/plain, */*",
-        },
-      }).then((response) => {
-        if (response.ok)
-          response.json().then((data) => {
-            setUserCost(data["costume"]);
-          });
-        else router.replace({ pathname: "/logout" });
-      });
-    }, []);
-
-    useEffect(() => {
-      if (userCost === null) {
-        setUserCost("000");
-      }
-    }, [userCost]);
-
     function incGlasses() {
       let curGlasses = parseInt(userCost.slice(0, 1));
       if (curGlasses === 3) {
@@ -185,61 +185,6 @@ export default function Profile() {
       </div>
     );
   } catch {
-    useEffect(() => {
-      setUserName(localStorage.getItem("username"));
-    }, []);
-
-    useEffect(() => {
-      fetch("https://oidc.mit.edu/userinfo", {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("access_token"),
-          Accept: "application/json, text/plain, */*",
-        },
-      }).then((response) => {
-        if (response.ok)
-          response.json().then((data) => {
-            setUserinfo(data);
-          });
-        else router.replace({ pathname: "/logout" });
-      });
-    }, []);
-    useEffect(() => {
-      fetch("https://waldobook.herokuapp.com/user/finds", {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("id_token"),
-          Accept: "application/json, text/plain, */*",
-        },
-      }).then((response) => {
-        if (response.ok)
-          response.json().then((data) => {
-            if (data.length) {
-              setNewestTreasure(data[0]["found_at"]);
-              setOldestTreasure(data[data.length - 1]["found_at"]);
-            }
-            setTreasuresFound(data);
-          });
-        else router.replace({ pathname: "/logout" });
-      });
-    }, []);
-
-    useEffect(() => {
-      fetch("https://waldobook.herokuapp.com/user", {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("id_token"),
-          Accept: "application/json, text/plain, */*",
-        },
-      }).then((response) => {
-        if (response.ok)
-          response.json().then((data) => {
-            setUserCost(data["costume"]);
-          });
-        else router.replace({ pathname: "/logout" });
-      });
-    }, []);
-
     return (
       <div className="Profile-wrapper">
         <MainNavBar username={userName} />
