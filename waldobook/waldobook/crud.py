@@ -27,7 +27,12 @@ def get_treasures(db: Session):
 
 
 def get_user_finds(db: Session, current_user: schemas.User):
-    return db.query(models.Find).filter(models.Find.user_sub == current_user.sub).all()
+    return (
+        db.query(models.Find)
+        .filter(models.Find.user_sub == current_user.sub)
+        .order_by(models.Find.found_at.desc())
+        .all()
+    )
 
 
 def get_placement(db: Session, placement: schemas.PlacementUUID):
