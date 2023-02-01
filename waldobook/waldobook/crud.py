@@ -20,8 +20,9 @@ def get_treasures(db: Session):
         db.query(models.Placement)
         .join(models.Treasure)
         .filter(models.Treasure.is_active == True)
-        .group_by(models.Placement.treasure_uuid, models.Placement)
-        .order_by(func.max(models.Placement.placed_at))
+        .group_by(models.Placement)
+        .order_by(models.Placement.treasure_uuid, func.max(models.Placement.placed_at))
+        .distinct(models.Placement.treasure_uuid)
         .all()
     )
 
