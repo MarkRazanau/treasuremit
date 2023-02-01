@@ -8,15 +8,16 @@ import Avatar from "../../components/Avatar";
 import scroll from "../../public/profile_scroll.png";
 
 export default function Profile() {
+  const router = useRouter();
+  const [userinfo, setUserinfo] = useState(undefined);
+  const [userCost, setUserCost] = useState("000");
+  const [userName, setUserName] = useState("Profile");
+  const [treasuresFound, setTreasuresFound] = useState([]);
+  const [editing, setEditing] = useState(false);
+  const [oldestTreasure, setOldestTreasure] = useState("N/A");
+  const [newestTreasure, setNewestTreasure] = useState("N/A");
+
   try {
-    const router = useRouter();
-    const [userinfo, setUserinfo] = useState(undefined);
-    const [userCost, setUserCost] = useState("000");
-    const [userName, setUserName] = useState("Profile");
-    const [treasuresFound, setTreasuresFound] = useState([]);
-    const [editing, setEditing] = useState(false);
-    const [oldestTreasure, setOldestTreasure] = useState("N/A");
-    const [newestTreasure, setNewestTreasure] = useState("N/A");
     useEffect(() => {
       setUserName(localStorage.getItem("username"));
     }, []);
@@ -184,14 +185,6 @@ export default function Profile() {
       </div>
     );
   } catch {
-    const router = useRouter();
-    const [userinfo, setUserinfo] = useState(undefined);
-    const [userCost, setUserCost] = useState("000");
-    const [userName, setUserName] = useState("Profile");
-    const [treasuresFound, setTreasuresFound] = useState([]);
-    const [editing, setEditing] = useState(false);
-    const [oldestTreasure, setOldestTreasure] = useState("N/A");
-    const [newestTreasure, setNewestTreasure] = useState("N/A");
     useEffect(() => {
       setUserName(localStorage.getItem("username"));
     }, []);
