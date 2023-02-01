@@ -332,6 +332,15 @@ html, body{
   padding-bottom: 6px;
 }
 
+.Modal-claim{
+  width:308px;
+  margin-bottom: 25px;
+  padding-left: 10px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-bottom: 50px;
+}
+
 .Profile-welcome{
   position:absolute;
   transform: translateX(-50%);

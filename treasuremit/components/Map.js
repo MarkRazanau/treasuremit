@@ -12,6 +12,7 @@ import {
   MarkerF,
   InfoWindow,
 } from "@react-google-maps/api";
+import { checkIsManualRevalidate } from "next/dist/server/api-utils";
 
 export default function Map(treasures) {
   const mitCoords = [
@@ -182,6 +183,7 @@ export default function Map(treasures) {
 
   const [selected, setSelected] = useState(null);
   const [caches, setCaches] = useState([]);
+  const [coords, setCoords] = useState(undefined);
 
   useEffect(() => {
     console.log(caches);
@@ -189,6 +191,10 @@ export default function Map(treasures) {
 
   const [settingTreasure, setSettingTreasure] = useState(false);
   const [popupTreasure, setPopupTreasure] = useState(false);
+  const [claimingTreasure, setClaimingTreasure] = useState(false);
+  const [failedClaim, setFailedClaim] = useState(false);
+  const [holdClaim, setHoldClaim] = useState(false);
+  const [confirmClaim, setConfirmClaim] = useState(undefined);
 
   function settingNewTreasure() {
     setSettingTreasure(true);
@@ -200,15 +206,124 @@ export default function Map(treasures) {
 
   function getNewLocation(coord) {
     if (settingTreasure) {
-      console.log(coord.latLng.lat());
-      console.log(coord.latLng.lng());
+      fetch("https://waldobook.herokuapp.com/treasure/qrgen", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("id_token"),
+          Accept: "application/json, text/plain, */*",
+        },
+      })
+        .then((res) => {
+          return res.blob();
+        })
+        .then((data) => {
+          var a = document.createElement("a");
+          a.target = "_blank";
+          a.href = window.URL.createObjectURL(data);
+          a.downlaod = "FILENAME";
+          a.click();
+        });
+
+      setCoords([coord.latLng.lat(), coord.latLng.lng()]);
+      // console.log(coord.latLng.lat());
+      // console.log(coord.latLng.lng());
       setPopupTreasure(true);
       setSettingTreasure(false);
     }
   }
+  function checkingClaim() {
+    setClaimingTreasure(true);
+  }
 
   function closeModal() {
     setPopupTreasure(false);
+    setClaimingTreasure(false);
+    setHoldClaim(false);
+    setConfirmClaim(undefined);
+  }
+
+  function submitTreasure() {
+    const qr_secret = document.getElementById("secret").value;
+    const name = document.getElementById("name").value;
+    const description = document.getElementById("description").value;
+    const clue = document.getElementById("clue").value;
+    fetch("https://waldobook.herokuapp.com/treasure/new", {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("id_token"),
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        qr_secret: qr_secret,
+        name: name,
+        description: description,
+      }),
+    })
+      .then(() => {
+        fetch("https://waldobook.herokuapp.com/treasure/place", {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("id_token"),
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            qr_secret: qr_secret,
+            clue: clue,
+            lat: coords[0],
+            long: coords[1],
+          }),
+        });
+      })
+      .then(setPopupTreasure(false));
+  }
+
+  function claimTreasure() {
+    const qr_secret = document.getElementById("claim_qr_secret").value;
+
+    fetch("https://waldobook.herokuapp.com/treasure/find", {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("id_token"),
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        qr_secret: qr_secret,
+      }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          setHoldClaim(true);
+        } else {
+          setFailedClaim(true);
+        }
+      })
+      .then(setClaimingTreasure(false));
+  }
+
+  function holdTreasure() {
+    const qr_secret = document.getElementById("hold_qr_secret").value;
+
+    fetch("https://waldobook.herokuapp.com/treasure/hold", {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("id_token"),
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        qr_secret: qr_secret,
+      }),
+    }).then((response) => {
+      if (response.ok) {
+        setConfirmClaim(true);
+        setHoldClaim(false);
+      } else {
+        setConfirmClaim(false);
+      }
+    });
   }
 
   return (
@@ -280,6 +395,7 @@ export default function Map(treasures) {
             <div>
               <h2 className="infoTitle">Clue</h2>
               <p className="infoClue">{selected["clue"]}</p>
+              <button onClick={checkingClaim}>Claim Treasure!</button>
             </div>
           </InfoWindow>
         )}
@@ -293,12 +409,16 @@ export default function Map(treasures) {
           <div className="TreasureMap-modal-overlay"></div>
           <div className="TreasureMap-modal-content">
             <h1>Set Up Your Treasure!</h1>
+            <p className="Modal-inputText">
+              Scan Your QR Code and Place The Text Here:
+            </p>
+            <input type="text" className="Modal-inputName" id="secret"></input>
             <p className="Modal-inputText">Treasure Name:</p>
-            <input type="text" className="Modal-inputName"></input>
+            <input type="text" className="Modal-inputName" id="name"></input>
             <p className="Modal-inputText">Treasure Clue:</p>
-            <textarea className="Modal-inputs"></textarea>
+            <textarea className="Modal-inputs" id="clue"></textarea>
             <p className="Modal-inputText">Treasure Description:</p>
-            <textarea className="Modal-inputs"></textarea>
+            <textarea className="Modal-inputs" id="description"></textarea>
             <div>
               <button
                 className="TreasureMap-modal-close-btn"
@@ -308,11 +428,117 @@ export default function Map(treasures) {
               </button>
               <button
                 className="TreasureMap-modal-submit-btn"
-                onClick={closeModal}
+                onClick={submitTreasure}
               >
                 Submit
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {claimingTreasure && (
+        <div className="TreasureMap-modal">
+          <div className="TreasureMap-modal-overlay"></div>
+          <div className="TreasureMap-modal-content">
+            <h1>Claim The Treasure!</h1>
+            <input
+              type="text"
+              className="Modal-claim"
+              id="claim_qr_secret"
+              placeholder="Enter Treasure UID"
+            ></input>
+            <button
+              className="TreasureMap-modal-close-btn"
+              onClick={closeModal}
+            >
+              Cancel
+            </button>
+            <button
+              className="TreasureMap-modal-submit-btn"
+              onClick={claimTreasure}
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      )}
+      {failedClaim && (
+        <div className="TreasureMap-modal">
+          <div className="TreasureMap-modal-overlay"></div>
+          <div className="TreasureMap-modal-content">
+            <h2 style={{ "text-align": "center", "margin-bottom": "30px" }}>
+              The Treasure ID is Incorrect :(
+            </h2>
+            <p style={{ "text-align": "center", "margin-bottom": "50px" }}>
+              If you did find the treasure, double-check that you are entering
+              the Treasure ID correctly.
+            </p>
+            <button
+              className="TreasureMap-modal-close-btn"
+              onClick={closeModal}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+      {holdClaim && (
+        <div className="TreasureMap-modal">
+          <div className="TreasureMap-modal-overlay"></div>
+          <div className="TreasureMap-modal-content">
+            <h1>You Found The Treasure!!!</h1>
+            <h3>
+              You can now hold to leave the treasure where you found it for
+              others to find or choose to hold onto it and place it in a new
+              location using the same Treasure ID. If you choose to hold, enter
+              the treasure ID below:
+            </h3>
+            <input
+              type="text"
+              className="Modal-claim"
+              id="hold_qr_secret"
+              placeholder="Enter Treasure UID"
+            ></input>
+            <p
+              style={{
+                visibility: confirmClaim === false ? "visible" : "hidden",
+              }}
+            >
+              The Treasure ID is incorrect :(
+            </p>
+            <button
+              className="TreasureMap-modal-close-btn"
+              onClick={closeModal}
+            >
+              Leave
+            </button>
+            <button
+              className="TreasureMap-modal-submit-btn"
+              onClick={holdTreasure}
+            >
+              Hold
+            </button>
+          </div>
+        </div>
+      )}
+      {confirmClaim && (
+        <div className="TreasureMap-modal">
+          <div className="TreasureMap-modal-overlay"></div>
+          <div className="TreasureMap-modal-content">
+            <h2 style={{ "text-align": "center", "margin-bottom": "30px" }}>
+              You Successfully Held Onto The Treasure!
+            </h2>
+            <p style={{ "text-align": "center", "margin-bottom": "50px" }}>
+              Make sure you place the treasure in a new location so that others
+              can enjoy the experience of finding the same treasure :)
+            </p>
+            <button
+              className="TreasureMap-modal-close-btn"
+              onClick={closeModal}
+            >
+              Close
+            </button>
           </div>
         </div>
       )}
