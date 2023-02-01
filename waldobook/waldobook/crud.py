@@ -60,7 +60,7 @@ def get_placement_by_treasure_qr(db: Session, treasure_qr: schemas.TreasureQR):
         .join(models.Treasure)
         .filter(models.Treasure.is_active == True)
         .filter(models.Treasure.qr_secret == treasure_qr.qr_secret)
-        .order_by(models.Placement.placed_at)
+        .order_by(models.Placement.placed_at.desc())
         .first()
     )
 
