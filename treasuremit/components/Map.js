@@ -218,6 +218,7 @@ export default function Map() {
     }).then((response) => {
       if (response.ok)
         response.json().then((data) => {
+          console.log(data);
           setTreasures(data);
         });
       else router.replace({ pathname: "/logout" });
@@ -477,9 +478,24 @@ export default function Map() {
             }}
           >
             <div>
-              <h2 className="infoTitle">Clue</h2>
-              <p className="infoClue">{selected["clue"]}</p>
-              <button onClick={checkingClaim}>Claim Treasure!</button>
+              <p
+                style={{ "margin-bottom": "15px", "font-size": "17px" }}
+                className="infoClue"
+              >
+                <strong>Clue:&nbsp;</strong>
+                {selected["clue"]}
+              </p>
+              <p style={{ "margin-bottom": "15px" }} className="infoClue">
+                <strong>Description:&nbsp;</strong>
+                {selected["treasure"]["description"]}
+              </p>
+              <button
+                style={{ margin: "auto" }}
+                className="Map-infoWindow"
+                onClick={checkingClaim}
+              >
+                Claim Treasure!
+              </button>
             </div>
           </InfoWindow>
         )}

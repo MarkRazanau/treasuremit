@@ -34,7 +34,7 @@ export default function Chest({ users }) {
         key={idx}
         treasure_name={treasureObj.placement.treasure.name}
         clue={treasureObj.placement.clue}
-        description={treasureObj.placement.treasure.name}
+        description={treasureObj.placement.treasure.description}
         date_found={treasureObj.found_at}
       />
     ));

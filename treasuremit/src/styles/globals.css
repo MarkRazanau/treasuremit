@@ -386,6 +386,11 @@ html, body{
   top: 40%;
 }
 
+.Avatar-picture{
+  position: relative;
+  height:200px
+}
+
 .Profile-stats{
   position:absolute;
   outline: 5px solid rgb(166,115,69);
@@ -412,4 +417,37 @@ html, body{
 .Profile-statItems{
   font-family: "Solitreo";
   font-size:30px;
+  margin-top:25px;
+}
+
+.Profile-arrowRight, .Profile-arrowLeft{
+  position:absolute;
+  background-color: rgba(166,115,69, 0.8);
+  box-shadow: 0 0 1em rgb(77, 53, 32);
+  padding:6px;
+  border-radius: 8px;
+  z-index: 10;
+}
+
+.Profile-arrowRight:hover, .Profile-arrowLeft:hover{
+  cursor:pointer;
+  background-color: rgba(133, 91, 55, 0.8);
+}
+
+.Profile-button{
+  position:relative;
+  font-family: "Solitreo";
+  text-align: center;
+  width:50px;
+  background-color: rgba(166,115,69, 0.8);
+  box-shadow: 0 0 1em rgb(77, 53, 32);
+  padding:6px;
+  padding-bottom:2px;
+  border-radius: 8px;
+  z-index: 10;
+}
+
+.Profile-button:hover{
+  cursor:pointer;
+  background-color: rgba(133, 91, 55, 0.8);
 }
