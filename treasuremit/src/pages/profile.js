@@ -78,135 +78,134 @@ export default function Profile() {
     }
   }, [userCost]);
 
-  try {
-    function incGlasses() {
-      let curGlasses = parseInt(userCost.slice(0, 1));
-      if (curGlasses === 3) {
-        return;
-      } else {
-        let newCost = (curGlasses + 1).toString() + userCost.slice(1);
-        setUserCost(newCost);
-      }
-    }
-    function decGlasses() {
-      let curGlasses = parseInt(userCost.slice(0, 1));
-      if (curGlasses === 0) {
-        return;
-      } else {
-        let newCost = (curGlasses - 1).toString() + userCost.slice(1);
-        setUserCost(newCost);
-      }
-    }
+  // try {
+  //   function incGlasses() {
+  //     let curGlasses = parseInt(userCost.slice(0, 1));
+  //     if (curGlasses === 3) {
+  //       return;
+  //     } else {
+  //       let newCost = (curGlasses + 1).toString() + userCost.slice(1);
+  //       setUserCost(newCost);
+  //     }
+  //   }
+  //   function decGlasses() {
+  //     let curGlasses = parseInt(userCost.slice(0, 1));
+  //     if (curGlasses === 0) {
+  //       return;
+  //     } else {
+  //       let newCost = (curGlasses - 1).toString() + userCost.slice(1);
+  //       setUserCost(newCost);
+  //     }
+  //   }
 
-    function activeEditing() {
-      setEditing(true);
-    }
+  //   function activeEditing() {
+  //     setEditing(true);
+  //   }
 
-    function inactiveEditing() {
-      setEditing(false);
-    }
+  //   function inactiveEditing() {
+  //     setEditing(false);
+  //   }
 
-    function saveCostume() {
-      fetch(
-        "https://waldobook.herokuapp.com/user/costume/update?costume=" +
-          userCost,
-        {
-          method: "POST",
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("id_token"),
-            Accept: "application/json, text/plain, */*",
-          },
-        }
-      );
-      setEditing(false);
-    }
+  //   function saveCostume() {
+  //     fetch(
+  //       "https://waldobook.herokuapp.com/user/costume/update?costume=" +
+  //         userCost,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           Authorization: "Bearer " + localStorage.getItem("id_token"),
+  //           Accept: "application/json, text/plain, */*",
+  //         },
+  //       }
+  //     );
+  //     setEditing(false);
+  //   }
 
-    return (
-      <div className="Profile-wrapper">
-        <MainNavBar username={userName} />
-        <Image className="Profile-scroll" src={scroll} />
-        <div className="Avatar-container">
-          <Avatar new_costume={userCost} />
-          {editing && (
-            <div>
-              <div
-                className="Profile-arrowRight"
-                style={{ left: "240px", top: "110px" }}
-                onClick={incGlasses}
-              >
-                &gt;
-              </div>
-              <div
-                className="Profile-arrowLeft"
-                style={{ left: "-40px", top: "110px" }}
-                onClick={decGlasses}
-              >
-                &lt;
-              </div>
-              <div
-                className="Profile-button"
-                style={{ left: "45px", top: "275px" }}
-                onClick={inactiveEditing}
-              >
-                Cancel
-              </div>
-              <div
-                className="Profile-button"
-                style={{ left: "125px", top: "245px" }}
-                onClick={saveCostume}
-              >
-                Save
-              </div>
-            </div>
-          )}
-          {!editing && (
-            <div
-              className="Profile-button"
-              style={{ left: "75px", top: "275px" }}
-              onClick={activeEditing}
-            >
-              Edit
-            </div>
-          )}
+  //   return (
+  //     <div className="Profile-wrapper">
+  //       <MainNavBar username={userName} />
+  //       <Image className="Profile-scroll" src={scroll} />
+  //       <div className="Avatar-container">
+  //         <Avatar new_costume={userCost} />
+  //         {editing && (
+  //           <div>
+  //             <div
+  //               className="Profile-arrowRight"
+  //               style={{ left: "240px", top: "110px" }}
+  //               onClick={incGlasses}
+  //             >
+  //               &gt;
+  //             </div>
+  //             <div
+  //               className="Profile-arrowLeft"
+  //               style={{ left: "-40px", top: "110px" }}
+  //               onClick={decGlasses}
+  //             >
+  //               &lt;
+  //             </div>
+  //             <div
+  //               className="Profile-button"
+  //               style={{ left: "45px", top: "275px" }}
+  //               onClick={inactiveEditing}
+  //             >
+  //               Cancel
+  //             </div>
+  //             <div
+  //               className="Profile-button"
+  //               style={{ left: "125px", top: "245px" }}
+  //               onClick={saveCostume}
+  //             >
+  //               Save
+  //             </div>
+  //           </div>
+  //         )}
+  //         {!editing && (
+  //           <div
+  //             className="Profile-button"
+  //             style={{ left: "75px", top: "275px" }}
+  //             onClick={activeEditing}
+  //           >
+  //             Edit
+  //           </div>
+  //         )}
+  //       </div>
+
+  //       <div className="Profile-stats">
+  //         <div className="Profile-statHeader">{userName}&apos;s Profile</div>
+  //         <div className="Profile-statItems">
+  //           # of Treasures Found: {treasuresFound.length}
+  //         </div>
+  //         <div className="Profile-statItems">
+  //           Recent Treasure Find: {newestTreasure.slice(0, 10)}
+  //         </div>
+  //         <div className="Profile-statItems">
+  //           Oldest Treasure Find: {oldestTreasure.slice(0, 10)}
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // } catch {
+  return (
+    <div className="Profile-wrapper">
+      <MainNavBar username={userName} />
+      <Image className="Profile-scroll" src={scroll} />
+      <div className="Avatar-container">
+        <Avatar new_costume="000" />
+      </div>
+      <div className="Profile-stats">
+        <div className="Profile-statHeader">{userName}&apos;s Profile</div>
+        <div className="Profile-statItems">
+          # of Treasures Found: {treasuresFound.length}
         </div>
-
-        <div className="Profile-stats">
-          <div className="Profile-statHeader">{userName}&apos;s Profile</div>
-          <div className="Profile-statItems">
-            # of Treasures Found: {treasuresFound.length}
-          </div>
-          <div className="Profile-statItems">
-            Recent Treasure Find: {newestTreasure.slice(0, 10)}
-          </div>
-          <div className="Profile-statItems">
-            Oldest Treasure Find: {oldestTreasure.slice(0, 10)}
-          </div>
+        <div className="Profile-statItems">
+          Recent Treasure Find: {newestTreasure.slice(0, 10)}
+        </div>
+        <div className="Profile-statItems">
+          Oldest Treasure Find: {oldestTreasure.slice(0, 10)}
         </div>
       </div>
-    );
-  } catch {
-    return (
-      <div className="Profile-wrapper">
-        <MainNavBar username={userName} />
-        <Image className="Profile-scroll" src={scroll} />
-        <div className="Avatar-container">
-          <Avatar new_costume="000" />
-        </div>
-        <div className="Profile-stats">
-          <div className="Profile-statHeader">{userName}&apos;s Profile</div>
-          <div className="Profile-statItems">
-            # of Treasures Found: {treasuresFound.length}
-          </div>
-          <div className="Profile-statItems">
-            Recent Treasure Find: {newestTreasure.slice(0, 10)}
-          </div>
-          <div className="Profile-statItems">
-            Oldest Treasure Find: {oldestTreasure.slice(0, 10)}
-          </div>
-        </div>
-      </div>
-    );
-  }
+    </div>
+  );
 }
 
 export async function getServerSideProps() {
