@@ -563,8 +563,8 @@ export default function Map() {
               You Successfully Created a New Treasure!
             </h2>
             <p style={{ "text-align": "center", "margin-bottom": "50px" }}>
-              Try looking for other people's treasures, or even set up another
-              treasure if you have more goodies to hide!
+              Try looking for other people&apos;s treasures, or even set up
+              another treasure if you have more goodies to hide!
             </p>
             <button
               className="TreasureMap-modal-close-btn"
@@ -583,8 +583,8 @@ export default function Map() {
               You Successfully Re-Placed The Treasure!
             </h2>
             <p style={{ "text-align": "center", "margin-bottom": "50px" }}>
-              Try looking for other people's treasures, or even set up another
-              treasure if you have more goodies to hide!
+              Try looking for other people&apos;s treasures, or even set up
+              another treasure if you have more goodies to hide!
             </p>
             <button
               className="TreasureMap-modal-close-btn"
