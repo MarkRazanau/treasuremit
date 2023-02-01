@@ -74,12 +74,14 @@
   top:8%;
   transform: translateX(-50%);
   font-family: 'Solitreo', cursive;
-  font-size: 25px;
+  font-size: 40px;
+  text-decoration: underline 2.5px;
   white-space: nowrap;
 
 }
 
 .Login-backimg{
+  position:absolute;
   height:94.9vh;
   width:100%;
 
@@ -93,6 +95,8 @@
 }
 
 .Login-backimg-wrapper{
+  height:471px;
+  width:364px;
   letter-spacing: 0;
   word-spacing: 0;
   font-size: 0;
@@ -106,6 +110,48 @@
   left:50%;
   transform: translate(-50%, -50%);
 }
+.Login-beaver-eyes{
+  height:471px;
+  width:364px;
+  position:relative;
+  top:-50px;
+  left:295px;;
+  transform: translate(-50%, -50%);
+  animation-name: eyesMoving;
+  animation-duration:12s;
+  animation-iteration-count: infinite;
+  animation-timing-function: cubic-bezier(.26,-0.02,.73,.98);
+}
+
+@keyframes eyesMoving {
+  0% {left:960px;
+    top:-50px;
+    transform: translateX(-50%);}
+  10% {left:948px;
+    top:-40px;
+    transform: translateX(-50%);}
+  25% {left:948px;
+    top:-40px;
+    transform: translateX(-50%);
+  }
+  35%{left:970px;
+    top:-40px;
+    transform: translateX(-50%);
+  }
+  45%{left:979px;
+    top:-40px;
+    transform: translateX(-50%);
+
+  }
+  55%{left:960px;
+    top:-50px;
+    transform: translateX(-50%);
+
+  }
+  100% {left:960px;
+    top:-50px;
+    transform: translateX(-50%);}
+}
 
 html, body{
   margin:0;
@@ -114,13 +160,23 @@ html, body{
 
 }
 
+.Login-questions{
+  margin-left: 2rem;
+  margin-right: 2rem;
+  text-align: center;
+  position:absolute;
+  top:6rem;
+  font-family: 'Solitreo', cursive;
+}
+
 .Login-info{
   margin-left: 2rem;
   margin-right: 2rem;
   text-align: center;
   position:absolute;
-  top:8rem;
+  top:6rem;
   font-family: 'Solitreo', cursive;
+  font-size:25px;
 }
 
 .Redirect-text{
