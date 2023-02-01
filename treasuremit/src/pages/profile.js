@@ -56,7 +56,7 @@ export default function Profile() {
         <Avatar />
       </div>
       <div className="Profile-stats">
-        <div className="Profile-statHeader">{userName}'s Profile</div>
+        <div className="Profile-statHeader">{userName}&apos;s Profile</div>
         <div className="Profile-statItems">
           # of Treasures Found: {treasuresFound.length}
         </div>
