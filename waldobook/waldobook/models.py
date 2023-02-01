@@ -16,6 +16,7 @@ class User(Base):
 
     sub = Column(String, primary_key=True, unique=True, index=True)
     is_active = Column(Boolean, default=True)
+    costume = Column(String)
 
 
 class Treasure(Base):

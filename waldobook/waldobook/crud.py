@@ -1,4 +1,3 @@
-from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
@@ -123,3 +122,13 @@ def set_treasure_inactive(db: Session, treasure: schemas.Treasure):
     db.commit()
     db.refresh(db_treasure)
     return db_treasure
+
+
+def set_costume(db: Session, user: schemas.User, costume: str):
+    db_user = db.query(models.User).filter(models.User.sub == user.sub).first()
+    if not db_user:
+        return None
+    db_user.costume = costume
+    db.commit()
+    db.refresh(db_user)
+    return db_user

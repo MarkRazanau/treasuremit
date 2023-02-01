@@ -9,6 +9,7 @@ class UserBase(BaseModel):
 
 class User(UserBase):
     is_active: bool
+    costume: str | None
 
     class Config:
         orm_mode = True

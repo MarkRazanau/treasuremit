@@ -12,13 +12,13 @@ from fastapi.security import OAuth2AuthorizationCodeBearer
 from jose import JWTError, jwt
 from sqlalchemy.orm import Session
 
-
 script_dir = os.path.dirname(os.path.realpath(__file__))
 waldobook_dir = os.path.dirname(script_dir)
 
 
 from . import crud, models, schemas
 from .database import SessionLocal, engine
+
 
 # This makes swagger use id_token instead of access_token
 def custom_openapi():
@@ -119,6 +119,35 @@ async def user_finds(
     Return list of the users finds
     """
     return crud.get_user_finds(db, current_user)
+
+
+@app.get("/user", response_model=schemas.User)
+async def get_costume(
+    current_user: schemas.User = Depends(get_current_active_user),
+):
+    """
+    Returns a user (and their costume)
+    """
+    return current_user
+
+
+@app.post(
+    "/user/costume/update",
+    response_model=schemas.User,
+    responses={status.HTTP_404_NOT_FOUND: {"model": schemas.Message}},
+)
+async def update_costume(
+    costume: str,
+    db: Session = Depends(get_db),
+    current_user: schemas.User = Depends(get_current_active_user),
+):
+    """
+    Updates a users costume
+    """
+    return crud.set_costume(db, current_user, costume) or JSONResponse(
+        status_code=status.HTTP_404_NOT_FOUND,
+        content={"message": "Placement not found"},
+    )
 
 
 @app.get(
